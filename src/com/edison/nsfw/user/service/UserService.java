@@ -1,7 +1,10 @@
 package com.edison.nsfw.user.service;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
+
+import javax.servlet.ServletOutputStream;
 
 import com.edison.nsfw.user.entity.User;
 
@@ -16,4 +19,6 @@ public interface UserService {
 		public User findObjectById(Serializable id);
 		//≤È’“¡–±Ì
 		public List<User> findObjects();
+		public void exportExcel(List<User> userList,ServletOutputStream outputStream);
+		public void importExcel(File userExcel,String userExcelFileName);
 }
