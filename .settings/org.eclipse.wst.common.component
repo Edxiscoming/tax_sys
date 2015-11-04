@@ -2,6 +2,8 @@
     <wb-module deploy-name="tax_sys">
         <wb-resource deploy-path="/" source-path="/WebRoot" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/test"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/config"/>
         <property name="java-output-path" value="/tax_sys/WebRoot/WEB-INF/classes"/>
         <property name="context-root" value="tax_sys"/>
     </wb-module>

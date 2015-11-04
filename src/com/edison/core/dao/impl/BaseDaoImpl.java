@@ -13,7 +13,7 @@ import com.edison.core.dao.BaseDao;
 public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
 	
 	Class<T> clazz;
-	
+	//反射获得父类泛型，得到类名
 	public BaseDaoImpl(){
 		ParameterizedType pt =  (ParameterizedType)this.getClass().getGenericSuperclass();//BaseDaoImpl<User>
 		clazz = (Class<T>)pt.getActualTypeArguments()[0];
@@ -41,8 +41,11 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 
 	@Override
 	public List<T> findObjects() {
+		//HibernateDaoSupport直接有getSession()这个方法
 		Query query = getSession().createQuery("FROM " + clazz.getSimpleName());
 		return query.list();
 	}
 
+	
+	
 }

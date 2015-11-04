@@ -41,11 +41,17 @@
 		</property>
 		<property name="mappingLocations">
 			<list>
-				<!-- <value>classpath:cn/itcast/nsfw/*/entity/*.hbm.xml</value> -->
+				<value>classpath:com/edison/nsfw/*/entity/*.hbm.xml</value>
 				<value>classpath:com/edison/test/entity/*.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
+	<!-- 引入sessionfactory，便于别的文件继承 -->
+	<bean id="baseDao" abstract="true">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>    
     
+
    <import resource="classpath:com/edison/test/conf/*-spring.xml"/>
+   <import resource="classpath:com/edison/nsfw/*/conf/*-spring.xml"/>
 </beans>

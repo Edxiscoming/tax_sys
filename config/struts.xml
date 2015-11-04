@@ -16,4 +16,5 @@
 	
 	
 	<include file="com/edison/test/conf/test-struts.xml"></include>
+	<include file="com/edison/nsfw/user/conf/user-struts.xml"></include>
 </struts>
