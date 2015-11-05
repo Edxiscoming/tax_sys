@@ -14,6 +14,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
+import com.edison.core.action.BaseAction;
 import com.edison.core.exception.ActionException;
 import com.edison.core.exception.ServiceException;
 import com.edison.core.exception.SysException;
@@ -21,13 +22,12 @@ import com.edison.nsfw.user.entity.User;
 import com.edison.nsfw.user.service.UserService;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class UserAction extends ActionSupport {
+public class UserAction extends BaseAction {
 	
 	@Resource
 	private UserService userService;
 	private List<User> userList;
 	private User user;
-	private String[] selectedRow;
 	private File headImg;
 	private String headImgContentType;
 	//默认写法    现在的理解哈 2015.11.4
@@ -40,10 +40,10 @@ public class UserAction extends ActionSupport {
 	//列表页面
 	public String listUI() throws Exception {
 		try {
-			int i=1/0;
-			//userList=userService.findObjects();
+//			int i=1/0;
+			userList=userService.findObjects();
 		} catch (Exception e) {
-			throw new ActionException(e.getMessage());
+			throw new Exception(e.getMessage());
 		}
 		return "listUI";
 	}
@@ -201,12 +201,6 @@ public class UserAction extends ActionSupport {
 	}
 	public void setUser(User user) {
 		this.user = user;
-	}
-	public String[] getSelectedRow() {
-		return selectedRow;
-	}
-	public void setSelectedRow(String[] selectedRow) {
-		this.selectedRow = selectedRow;
 	}
 	public File getHeadImg() {
 		return headImg;

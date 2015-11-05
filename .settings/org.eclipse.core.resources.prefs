@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/com/edison/core/action/SysResultAction.java=UTF-8
 encoding//src/com/edison/core/dao/BaseDao.java=UTF-8
 encoding//src/com/edison/nsfw/user/entity/User.java=UTF-8
 encoding//test/com/edison/test/TestLog.java=UTF-8
