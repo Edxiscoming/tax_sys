@@ -32,6 +32,14 @@
 		document.forms[0].action="${basePath}nsfw/user_deleteSelected.action";
 		document.forms[0].submit();
 		}
+		function doExportExcel(){
+		window.open("${basePath}nsfw/user_exportExcel.action");
+		}
+		//导入
+      	function doImportExcel(){
+      		document.forms[0].action = "${basePath}nsfw/user_importExcel.action";
+      		document.forms[0].submit();
+      	}
     </script>
 </head>
 <body class="rightBody">
