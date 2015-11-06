@@ -88,7 +88,10 @@
         </tr>
         <tr>
             <td class="tdBg" width="200px">角色：</td>
-            <td></td>
+<!-- 先从action中得到roleList，里面是所有已经有的角色，这样就可以展示在前端，在添加用户的时候选择自己的角色，选择角色完成后，你选的的信息就返回给了action，userRoleIds -->
+             <td>                              
+            	<s:checkboxlist list="#roleList" name="userRoleIds" listKey="roleId" listValue="name"></s:checkboxlist>
+            </td>
         </tr>
         <tr>
             <td class="tdBg" width="200px">电子邮箱：</td>

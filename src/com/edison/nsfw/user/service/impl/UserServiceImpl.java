@@ -16,8 +16,11 @@ import org.springframework.stereotype.Service;
 
 import com.edison.core.exception.ServiceException;
 import com.edison.core.util.ExcelUtil;
+import com.edison.nsfw.role.entity.Role;
 import com.edison.nsfw.user.dao.UserDao;
 import com.edison.nsfw.user.entity.User;
+import com.edison.nsfw.user.entity.UserRole;
+import com.edison.nsfw.user.entity.UserRoleId;
 import com.edison.nsfw.user.service.UserService;
 
 @Service("userService")
@@ -128,5 +131,41 @@ public class UserServiceImpl implements UserService {
 		List<User> list=userDao.findObjectByIdAndAccount(id,account);
 		return list;
 	}
+
+	@Override
+	public void saveUserAndRole(User user, String... roleIds) {
+		save(user);
+		if(roleIds!=null){
+			for(String roleId:roleIds){
+				userDao.saveUserRole(new UserRole(new UserRoleId(new Role(roleId),user.getId())));
+			}
+		}
+	}
+
+	@Override
+	public void updateUserAndRole(User user, String... roleIds) {
+		//根据用户Id删除用户角色
+		userDao.deleteUserRoleByUserId(user.getId());
+		update(user);
+		if(roleIds!=null){
+			for(String roleId:roleIds){
+				userDao.saveUserRole(new UserRole(new UserRoleId(new Role(roleId),user.getId())));
+			}
+		}
+	}
+
+	@Override
+	public List<UserRole> getUserRolesByUserId(String id) {
+		return userDao.getUserRolesByUserId(id);
+	}
+
+	@Override
+	public List<User> findUserByAccountAndPass(String account, String password) {
+		// TODO Auto-generated method stub
+		return userDao.findUserByAccountAndPass(account,password);
+	}
+	
+	
+	
 }
 

@@ -36,5 +36,10 @@
 	<include file="com/edison/test/conf/test-struts.xml"></include>
 	<include file="com/edison/nsfw/user/conf/user-struts.xml"></include>
 	<include file="com/edison/nsfw/role/conf/role-struts.xml"></include>
-	
+	<!-- 系统首页 -->
+	<include file="com/edison/home/conf/home-struts.xml"></include>	
+	<!-- 纳税服务子系统首页 -->
+	<include file="com/edison/nsfw/home/conf/home-struts.xml"></include>
+	<!-- 登录首页 -->
+	<include file="com/edison/login/conf/login-struts.xml"></include>
 </struts>

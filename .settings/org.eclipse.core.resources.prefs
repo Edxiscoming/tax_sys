@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//src/com/edison/core/action/SysResultAction.java=UTF-8
 encoding//src/com/edison/core/constant/Constant.java=UTF-8
 encoding//src/com/edison/core/dao/BaseDao.java=UTF-8
+encoding//src/com/edison/nsfw/home/action/HomeAction.java=UTF-8
 encoding//src/com/edison/nsfw/role/action/RoleAction.java=UTF-8
 encoding//src/com/edison/nsfw/role/dao/RoleDao.java=UTF-8
 encoding//src/com/edison/nsfw/role/service/RoleService.java=UTF-8
