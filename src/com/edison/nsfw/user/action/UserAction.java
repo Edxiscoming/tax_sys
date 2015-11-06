@@ -18,24 +18,31 @@ import com.edison.core.action.BaseAction;
 import com.edison.core.exception.ActionException;
 import com.edison.core.exception.ServiceException;
 import com.edison.core.exception.SysException;
+import com.edison.nsfw.role.service.RoleService;
 import com.edison.nsfw.user.entity.User;
+import com.edison.nsfw.user.entity.UserRole;
 import com.edison.nsfw.user.service.UserService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class UserAction extends BaseAction {
 	
 	@Resource
 	private UserService userService;
+	@Resource
+	private RoleService roleService;
 	private List<User> userList;
 	private User user;
 	private File headImg;
 	private String headImgContentType;
 	//默认写法    现在的理解哈 2015.11.4
 	private String headImgFileName;
-	
+	//excel表格
 	private File userExcel;
 	private String userExcelContentType;
 	private String userExcelFileName;
+	//在增加用户选择角色时获得的数据
+	private String[] userRoleIds;
 	
 	//列表页面
 	public String listUI() throws Exception {
@@ -49,6 +56,8 @@ public class UserAction extends BaseAction {
 	}
 	//跳转到新增页面
 	public String addUI() {
+		
+		ActionContext.getContext().getContextMap().put("roleList", roleService.findObjects());
 		return "addUI";
 	}
 	//保存新增
@@ -68,7 +77,7 @@ public class UserAction extends BaseAction {
 					//设置头像路径
 					user.setHeadImg("user/"+fileName);
 				}
-				userService.save(user);
+				userService.saveUserAndRole(user,userRoleIds);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -78,8 +87,18 @@ public class UserAction extends BaseAction {
 	}
 	//跳转到编辑页面
 	public String editUI() {
+		ActionContext.getContext().getContextMap().put("roleList", roleService.findObjects());
 		if(user!=null&&user.getId()!=null){
 			user =userService.findObjectById(user.getId());
+		//数据回显到页面上去
+		List<UserRole> list=userService.getUserRolesByUserId(user.getId());
+		if(list!=null&&list.size()>0){
+			//给数组设置长度
+			userRoleIds=new String[list.size()];
+			for(int i=0;i<list.size();i++){
+				userRoleIds[i]=list.get(i).getId().getRole().getRoleId();
+			}
+		 }
 		}
 		return "editUI";
 	}
@@ -99,7 +118,7 @@ public class UserAction extends BaseAction {
 					//2、设置用户头像路径
 					user.setHeadImg("user/" + fileName);
 				}
-				userService.update(user);
+				userService.updateUserAndRole(user,userRoleIds);
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -238,6 +257,18 @@ public class UserAction extends BaseAction {
 	}
 	public void setUserExcelFileName(String userExcelFileName) {
 		this.userExcelFileName = userExcelFileName;
+	}
+	public String[] getUserRoleIds() {
+		return userRoleIds;
+	}
+	public void setUserRoleIds(String[] userRoleIds) {
+		this.userRoleIds = userRoleIds;
+	}
+	public RoleService getRoleService() {
+		return roleService;
+	}
+	public void setRoleService(RoleService roleService) {
+		this.roleService = roleService;
 	}
 	
 }
