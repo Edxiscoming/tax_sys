@@ -70,12 +70,12 @@
                     <td align="center"></td>
                     <td align="left"></td>
                     <td align="right">
-                        <a><b></b><font color="red">欢迎您，xxx&nbsp;</font></a>
+                        <a><b></b><font color="red">欢迎您，<s:property value="#session.SYS_USER.name"/>&nbsp;</font></a>
                     </td>
                     <td align="center"><img src="${ctx}/images/home/help.png" width="12" height="17"  /></td>
                     <td align="left"><a href="javascript:void(0);">帮助</a></td>
                     <td align="center"><img src="${ctx}/images/home/exit.png" width="14" height="14"   /></td>
-                    <td align="left" valign="middle" ><a href="#">退出</a></td>
+                    <td align="left" valign="middle" ><a href="${ctx }/sys/login_logout.action">退出</a></td>
                 </tr>
             </table>
         </td>
@@ -106,17 +106,20 @@
                 <tr>
                     <td width="76" height="100" align="center" valign="middle">
                         <div class="left-tx">
-                            
-							<img src="${ctx}/images/home/gs09.png" width="70" height="70" />
+                            <s:if test="%{#session.SYS_USER.headImg != null && #session.SYS_USER.headImg !=''}">
+                            	<img src="${ctx}/upload/<s:property value='#session.SYS_USER.headImg'/>" width="70" height="70" />
+                            </s:if><s:else>
+								<img src="${ctx}/images/home/gs09.png" width="70" height="70" />
+							</s:else>
                         </div>
                     </td>
                     <td width="5%"><img src="${ctx}/images/home/gs10.png" width="4" height="59" alt="" /></td>
                     <td width="60%"><table width="95%" border="0" cellpadding="0" cellspacing="0">
                         <tr>
-                            <td colspan="2" style=" font-weight:bold; color:#3a7daa;">xx名</td>
+                            <td colspan="2" style=" font-weight:bold; color:#3a7daa;"><s:property value="#session.SYS_USER.name"/></td>
                         </tr>
                         <tr>
-                            <td colspan="2">所属部门：xx部门</td>
+                            <td colspan="2">所属部门：<s:property value="#session.SYS_USER.dept"/></td>
                         </tr>
                     </table>
                     </td>

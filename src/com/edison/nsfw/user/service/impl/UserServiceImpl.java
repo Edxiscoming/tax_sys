@@ -43,8 +43,9 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void delete(Serializable id) {
-		// TODO Auto-generated method stub
 		userDao.delete(id);
+		//删除用户所具有的角色
+		userDao.deleteUserRoleByUserId(id);
 	}
 
 	@Override

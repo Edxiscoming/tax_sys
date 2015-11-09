@@ -50,7 +50,8 @@
 	<bean id="baseDao" abstract="true">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>    
-    
+    <!-- 权限鉴定 -->
+    <bean id="permissionCheck" class="com.edison.core.permission.impl.PermissionCheckImpl"></bean>
 
    <import resource="classpath:com/edison/test/conf/*-spring.xml"/>
    <import resource="classpath:com/edison/nsfw/*/conf/*-spring.xml"/>

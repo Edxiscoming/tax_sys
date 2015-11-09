@@ -43,7 +43,7 @@ public class UserDaoImpl extends BaseDaoImpl<User>implements UserDao {
 	
 	
 	@Override
-	public void deleteUserRoleByUserId(String id) {
+	public void deleteUserRoleByUserId(Serializable id) {
 		Query query=getSession().createQuery("DELETE FROM UserRole WHERE id.userId=?");
 		query.setParameter(0, id);
 		query.executeUpdate();

@@ -22,7 +22,10 @@ function setClean(){
 	document.getElementById("account").value = "";
 	document.getElementById("password").value = "";
 }
-
+//解决子框架嵌套的问题
+if(window != window.parent){
+	window.parent.location.reload(true);
+}
 </script>
 <style type="text/css">
 html { overflow-y: hidden;  }

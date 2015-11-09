@@ -1,5 +1,6 @@
 package com.edison.nsfw.user.dao;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.edison.core.dao.BaseDao;
@@ -12,7 +13,7 @@ public interface UserDao extends BaseDao<User> {
 
 	void saveUserRole(UserRole userRole);
 
-	void deleteUserRoleByUserId(String id);
+	void deleteUserRoleByUserId(Serializable id);
 
 	List<UserRole> getUserRolesByUserId(String id);
     //ÑéÖ¤µÇÂ¼

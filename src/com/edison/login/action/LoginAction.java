@@ -21,6 +21,7 @@ public class LoginAction extends ActionSupport {
 	private UserService userService;
 	private User user;
 	private String loginResult;
+	
 	//跳转到登录页面
 		public String toLoginUI(){
 			return "loginUI";
@@ -33,6 +34,8 @@ public class LoginAction extends ActionSupport {
 					if(list!=null&&list.size()>0){
 						//登录成功
 						User user=list.get(0);
+						//根据用户id得到用户的角色权限
+						user.setUserRoles(userService.getUserRolesByUserId(user.getId()));
 						ServletActionContext.getRequest().getSession().setAttribute(Constant.USER, user);
 						Log log = LogFactory.getLog(getClass());
 						log.info("用户名称为：" + user.getName() + " 的用户登录了系统。");
@@ -50,7 +53,15 @@ public class LoginAction extends ActionSupport {
 			}
 			return toLoginUI();
 		}
-		
+		//注销
+		public String logout(){
+			ServletActionContext.getRequest().getSession().removeAttribute(Constant.USER);
+			return toLoginUI();
+		}
+		//跳转到没有权限提示页面
+		public String toNoPermissionUI(){
+			return "noPermissionUI";
+		}
 		public UserService getUserService() {
 			return userService;
 		}
