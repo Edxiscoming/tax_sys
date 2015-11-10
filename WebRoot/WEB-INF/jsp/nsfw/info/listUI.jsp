@@ -55,6 +55,11 @@
   			}
   		});
   	}
+  	//搜索
+  	function doSearch(){
+  		document.forms[0].action = "${basePath}nsfw/info_listUI.action";
+  		document.forms[0].submit();
+  	}
     </script>
 </head>
 <body class="rightBody">

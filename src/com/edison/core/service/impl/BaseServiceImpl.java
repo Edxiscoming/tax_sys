@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.edison.core.dao.BaseDao;
 import com.edison.core.service.BaseService;
+import com.edison.core.util.QueryHelper;
 
 public class BaseServiceImpl<T> implements BaseService<T> {
 	
@@ -37,6 +38,17 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	@Override
 	public List<T> findObjects() {
 		return baseDao.findObjects();
+	}
+
+	@Override
+	public List<T> findObjects(String hql, List<Object> parameters) {
+		return baseDao.findObjects(hql, parameters);
+	}
+
+	@Override
+	public List<T> findObjects(QueryHelper queryHelper) {
+		// TODO Auto-generated method stub
+		return baseDao.findObjects(queryHelper);
 	}
 
 }

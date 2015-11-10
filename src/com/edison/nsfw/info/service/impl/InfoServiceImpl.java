@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.edison.core.service.impl.BaseServiceImpl;
+import com.edison.core.util.QueryHelper;
 import com.edison.nsfw.info.dao.InfoDao;
 import com.edison.nsfw.info.entity.Info;
 import com.edison.nsfw.info.service.InfoService;
@@ -23,8 +24,5 @@ public class InfoServiceImpl extends BaseServiceImpl<Info> implements InfoServic
 		super.setBaseDao(infoDao);
 		this.infoDao = infoDao;
 	}
-	
-	
-
 
 }
