@@ -42,4 +42,6 @@
 	<include file="com/edison/nsfw/home/conf/home-struts.xml"></include>
 	<!-- 登录首页 -->
 	<include file="com/edison/login/conf/login-struts.xml"></include>
+	<!-- 信息 -->
+	<include file="com/edison/nsfw/info/conf/info-struts.xml"></include>
 </struts>

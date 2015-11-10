@@ -7,20 +7,12 @@ import java.util.List;
 import javax.servlet.ServletOutputStream;
 
 import com.edison.core.exception.ServiceException;
+import com.edison.core.service.BaseService;
 import com.edison.nsfw.user.entity.User;
 import com.edison.nsfw.user.entity.UserRole;
 
-public interface UserService {
-	    //新增
-		public void save(User user);
-		//更新
-		public void update(User user);
-		//根据id删除O
-		public void delete(Serializable id);
-		//根据id查找
-		public User findObjectById(Serializable id);
-		//查找列表
-		public List<User> findObjects() throws ServiceException;
+public interface UserService extends BaseService<User>{
+	   
 		public void exportExcel(List<User> userList,ServletOutputStream outputStream);
 		public void importExcel(File userExcel,String userExcelFileName);
 		public List<User> findObjectByIdAndAccount(String id, String account);

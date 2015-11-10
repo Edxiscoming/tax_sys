@@ -15,6 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 
 import com.edison.core.exception.ServiceException;
+import com.edison.core.service.impl.BaseServiceImpl;
 import com.edison.core.util.ExcelUtil;
 import com.edison.nsfw.role.entity.Role;
 import com.edison.nsfw.user.dao.UserDao;
@@ -24,41 +25,21 @@ import com.edison.nsfw.user.entity.UserRoleId;
 import com.edison.nsfw.user.service.UserService;
 
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 	
-	@Resource
+	
 	private UserDao userDao;
-	
-	@Override
-	public void save(User user) {
-		// TODO Auto-generated method stub
-		userDao.save(user);
+	@Resource
+	public void setUserDao(UserDao userDao) {
+		super.setBaseDao(userDao);
+		this.userDao = userDao;
 	}
-
-	@Override
-	public void update(User user) {
-		// TODO Auto-generated method stub
-		userDao.update(user);
-	}
-
 	@Override
 	public void delete(Serializable id) {
 		userDao.delete(id);
 		//删除用户所具有的角色
 		userDao.deleteUserRoleByUserId(id);
 	}
-
-	@Override
-	public User findObjectById(Serializable id) {
-		return userDao.findObjectById(id);
-		
-	}
-
-	@Override
-	public List<User> findObjects() throws ServiceException{
-		return userDao.findObjects();
-	}
-
 	@Override
 	public void exportExcel(List<User> userList,ServletOutputStream outputStream) {
 		ExcelUtil.exportUserExcel(userList, outputStream);
