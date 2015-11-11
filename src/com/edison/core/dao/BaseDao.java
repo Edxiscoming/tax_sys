@@ -4,6 +4,7 @@ package com.edison.core.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import com.edison.core.page.PageResult;
 import com.edison.core.util.QueryHelper;
 
 public interface BaseDao<T> {
@@ -22,5 +23,7 @@ public interface BaseDao<T> {
 	public List<T> findObjects(String hql, List<Object> parameters);
 	//优化条件查询，queryHelper
 	public List<T> findObjects(QueryHelper queryHelper);
+	//分页条件查询--queryHelper
+	public PageResult getPageResult(QueryHelper queryHelper, int pageNo,int pageSize);
 
 }

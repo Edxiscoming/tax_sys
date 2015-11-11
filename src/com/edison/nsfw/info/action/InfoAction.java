@@ -15,6 +15,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.edison.core.action.BaseAction;
+import com.edison.core.page.PageResult;
 import com.edison.core.util.QueryHelper;
 import com.edison.nsfw.info.entity.Info;
 import com.edison.nsfw.info.service.InfoService;
@@ -25,7 +26,6 @@ public class InfoAction extends BaseAction {
 	
 	@Resource
 	private InfoService infoService;
-	private List<Info> infoList;
 	private Info info;
 	private String[] privilegeIds;
 	private String strTitle;
@@ -44,7 +44,9 @@ public class InfoAction extends BaseAction {
 			}
 			//Ωµ–Ú≈≈¡–
 			queryHelper.addOrderByProperty("i.createTime", QueryHelper.ORDER_BY_DESC);
-			infoList = infoService.findObjects(queryHelper);
+			//infoList = infoService.findObjects(queryHelper);
+			//∑÷“≥≤È—Ø
+			pageResult = infoService.getPageResult(queryHelper,getPageNo(),getPageSize());
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
@@ -132,12 +134,7 @@ public class InfoAction extends BaseAction {
 			e.printStackTrace();
 		}
 	}
-	public List<Info> getInfoList() {
-		return infoList;
-	}
-	public void setInfoList(List<Info> infoList) {
-		this.infoList = infoList;
-	}
+	
 	public Info getInfo() {
 		return info;
 	}
@@ -156,5 +153,6 @@ public class InfoAction extends BaseAction {
 	public void setStrTitle(String strTitle) {
 		this.strTitle = strTitle;
 	}
+
 	
 }

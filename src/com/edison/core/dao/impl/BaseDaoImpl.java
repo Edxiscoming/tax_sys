@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.edison.core.dao.BaseDao;
+import com.edison.core.page.PageResult;
 import com.edison.core.util.QueryHelper;
 
 public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements BaseDao<T> {
@@ -71,6 +72,35 @@ public abstract class BaseDaoImpl<T> extends HibernateDaoSupport implements Base
 			}
 		}
 	return query.list();
+	}
+
+	@Override
+	public PageResult getPageResult(QueryHelper queryHelper, int pageNo,int pageSize) {
+		//HibernateDaoSupport直接有getSession()这个方法
+		Query query = getSession().createQuery(queryHelper.getQueryListHql());
+		List<Object> parameters=queryHelper.getParameters();
+		if(parameters!=null){
+			for(int i=0;i<parameters.size();i++){
+				query.setParameter(i, parameters.get(i));
+			}
+		}
+		//设置初始化页号
+		if(pageNo < 1) pageNo = 1;
+		
+		query.setFirstResult((pageNo-1)*pageSize);//设置数据起始索引号
+		query.setMaxResults(pageSize);
+		//查询出来的数据
+	    List items= query.list();
+		
+	    //查询总数
+		Query queryCount = getSession().createQuery(queryHelper.getQueryCountHql());
+		if(parameters!=null){
+			for(int i=0;i<parameters.size();i++){
+				queryCount.setParameter(i, parameters.get(i));
+			}
+		}
+		Long totalCount=(Long) queryCount.uniqueResult();
+		return new PageResult(totalCount, pageNo, pageSize, items);
 	}
 
 	

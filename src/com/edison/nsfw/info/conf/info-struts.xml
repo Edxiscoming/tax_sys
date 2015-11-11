@@ -10,6 +10,7 @@
 			<result name="list" type="redirectAction">
 				<param name="actionName">info_listUI</param>
 				<param name="info.title">${strTitle}</param>
+				<param name="pageNo">${pageNo}</param>
 				<param name="encode">true</param>
 			</result>
 			

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.edison.core.dao.BaseDao;
+import com.edison.core.page.PageResult;
 import com.edison.core.service.BaseService;
 import com.edison.core.util.QueryHelper;
 
@@ -49,6 +50,11 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 	public List<T> findObjects(QueryHelper queryHelper) {
 		// TODO Auto-generated method stub
 		return baseDao.findObjects(queryHelper);
+	}
+
+	@Override
+	public PageResult getPageResult(QueryHelper queryHelper, int pageNo,int pageSize) {
+		return baseDao.getPageResult(queryHelper,pageNo,pageSize);
 	}
 
 }

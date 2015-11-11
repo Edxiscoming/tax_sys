@@ -2,6 +2,7 @@ package com.edison.nsfw.user.action;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.UUID;
 
@@ -18,6 +19,7 @@ import com.edison.core.action.BaseAction;
 import com.edison.core.exception.ActionException;
 import com.edison.core.exception.ServiceException;
 import com.edison.core.exception.SysException;
+import com.edison.core.util.QueryHelper;
 import com.edison.nsfw.role.service.RoleService;
 import com.edison.nsfw.user.entity.User;
 import com.edison.nsfw.user.entity.UserRole;
@@ -43,16 +45,34 @@ public class UserAction extends BaseAction {
 	private String userExcelFileName;
 	//在增加用户选择角色时获得的数据
 	private String[] userRoleIds;
+	private String strName;
 	
 	//列表页面
 	public String listUI() throws Exception {
+		//1.没有分页查询
+//		try {
+////			int i=1/0;
+//			userList=userService.findObjects();
+//		} catch (Exception e) {
+//			throw new Exception(e.getMessage());
+//		}
+//		return "listUI";
+		//2.可以分页查询
+		QueryHelper queryHelper = new QueryHelper(User.class, "u");
 		try {
-//			int i=1/0;
-			userList=userService.findObjects();
+			if (user != null) {
+				if (StringUtils.isNotBlank(user.getName())) {
+					user.setName(URLDecoder.decode(user.getName(), "utf-8"));
+					queryHelper.addCondition("u.name like ?", "%" + user.getName() + "%");
+				}
+			}
+			pageResult = userService.getPageResult(queryHelper, getPageNo(), getPageSize());
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
+
 		return "listUI";
+
 	}
 	//跳转到新增页面
 	public String addUI() {
@@ -89,6 +109,7 @@ public class UserAction extends BaseAction {
 	public String editUI() {
 		ActionContext.getContext().getContextMap().put("roleList", roleService.findObjects());
 		if(user!=null&&user.getId()!=null){
+			strName=user.getName();
 			user =userService.findObjectById(user.getId());
 		//数据回显到页面上去
 		List<UserRole> list=userService.getUserRolesByUserId(user.getId());
@@ -269,6 +290,12 @@ public class UserAction extends BaseAction {
 	}
 	public void setRoleService(RoleService roleService) {
 		this.roleService = roleService;
+	}
+	public String getStrName() {
+		return strName;
+	}
+	public void setStrName(String strName) {
+		this.strName = strName;
 	}
 	
 }

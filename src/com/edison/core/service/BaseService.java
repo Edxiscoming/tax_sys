@@ -3,6 +3,7 @@ package com.edison.core.service;
 import java.io.Serializable;
 import java.util.List;
 
+import com.edison.core.page.PageResult;
 import com.edison.core.util.QueryHelper;
 import com.edison.nsfw.info.entity.Info;
 
@@ -22,4 +23,6 @@ public interface BaseService<T> {
 	public List<T> findObjects(String hql, List<Object> parameters);
 	//条件查询 优化--queryHelper
 	public List<T> findObjects(QueryHelper queryHelper);
+	//分页条件查询--queryHelper
+	public PageResult getPageResult(QueryHelper queryHelper, int pageNo, int pageSize);
 }

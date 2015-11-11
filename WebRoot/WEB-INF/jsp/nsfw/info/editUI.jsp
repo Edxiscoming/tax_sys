@@ -53,6 +53,7 @@
         </tr>
     </table>
     <!-- 暂存条件值 -->
+    <s:hidden name="pageNo"/>
     <s:hidden name="strTitle"/>
     <s:hidden name="info.infoId"/>
     <s:hidden name="info.state"/>

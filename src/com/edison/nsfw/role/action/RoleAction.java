@@ -1,12 +1,16 @@
 package com.edison.nsfw.role.action;
 
+import java.net.URLDecoder;
 import java.util.HashSet;
 import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.edison.core.action.BaseAction;
 import com.edison.core.constant.Constant;
+import com.edison.core.util.QueryHelper;
 import com.edison.nsfw.role.entity.Role;
 import com.edison.nsfw.role.entity.RolePrivilege;
 import com.edison.nsfw.role.entity.RolePrivilegeId;
@@ -20,13 +24,31 @@ public class RoleAction extends BaseAction {
 	private List<Role> roleList;
 	private Role role;
 	private String[] privilegeIds;//获取checkbox的value，就是每个权限的code
-	
+	private String strName;
 	
 	public String listUI() throws Exception{
-		
+		//1.不分页
+//		ActionContext.getContext().getContextMap().put("privilegeMap", Constant.PRIVILEGE_MAP);
+//		try {
+//			roleList = roleService.findObjects();
+//		} catch (Exception e) {
+//			throw new Exception(e.getMessage());
+//		}
+//		
+//		return "listUI";
+		//分页查询
+		//加载权限集合
 		ActionContext.getContext().getContextMap().put("privilegeMap", Constant.PRIVILEGE_MAP);
+		QueryHelper queryHelper = new QueryHelper(Role.class, "r");
 		try {
-			roleList = roleService.findObjects();
+			if(role != null){
+				if(StringUtils.isNotBlank(role.getName())){
+					role.setName(URLDecoder.decode(role.getName(), "utf-8"));
+					queryHelper.addCondition("r.name like ?", "%" + role.getName() + "%");
+				}
+				
+			}
+			pageResult = roleService.getPageResult(queryHelper, getPageNo(), getPageSize());
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
@@ -64,6 +86,7 @@ public class RoleAction extends BaseAction {
 		//把所有的权限名字传递到编辑页面
 		ActionContext.getContext().getContextMap().put("privilegeMap", Constant.PRIVILEGE_MAP);
 		if (role != null && role.getRoleId() != null) {
+			strName=role.getName();
 			role = roleService.findObjectById(role.getRoleId());
 			
 			if(role.getRolePrivileges() != null){
@@ -129,6 +152,14 @@ public class RoleAction extends BaseAction {
 	}
 	public void setPrivilegeIds(String[] privilegeIds) {
 		this.privilegeIds = privilegeIds;
+	}
+
+	public String getStrName() {
+		return strName;
+	}
+
+	public void setStrName(String strName) {
+		this.strName = strName;
 	}
 	
 }
