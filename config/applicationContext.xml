@@ -45,7 +45,12 @@
 				<value>classpath:com/edison/test/entity/*.hbm.xml</value>
 			</list>
 		</property>
-	</bean>
+		<property name="mappingResources">
+			<list>
+				<value>com/edison/nsfw/complain/entity/ComplainReply.hbm.xml</value>
+				<value>com/edison/nsfw/complain/entity/Complain.hbm.xml</value>
+			</list>
+		</property></bean>
 	<!-- 引入sessionfactory，便于别的文件继承 -->
 	<bean id="baseDao" abstract="true">
 		<property name="sessionFactory" ref="sessionFactory"></property>
@@ -55,4 +60,5 @@
 
    <import resource="classpath:com/edison/test/conf/*-spring.xml"/>
    <import resource="classpath:com/edison/nsfw/*/conf/*-spring.xml"/>
-</beans>
+  
+   </beans>
