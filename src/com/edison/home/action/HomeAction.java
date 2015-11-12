@@ -3,6 +3,8 @@ package com.edison.home.action;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +20,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.struts2.ServletActionContext;
 
 import com.edison.core.util.QueryHelper;
+import com.edison.nsfw.complain.entity.Complain;
+import com.edison.nsfw.complain.service.ComplainService;
 import com.edison.nsfw.user.entity.User;
 import com.edison.nsfw.user.service.UserService;
 import com.opensymphony.xwork2.ActionSupport;
@@ -26,6 +30,9 @@ public class HomeAction extends ActionSupport {
 	
 	@Resource
 	private UserService userService;
+	@Resource
+	private ComplainService complainService;
+	private Complain comp;
 	private Map<String, Object> return_map;
 	
 	//跳转到首页
@@ -81,12 +88,43 @@ public class HomeAction extends ActionSupport {
 		}
 		return SUCCESS;
 	}
+	
+	//保存投诉
+		public void complainAdd(){
+			try {
+				if(comp != null){
+					//设置默写投诉状态为 待受理
+					comp.setState(Complain.COMPLAIN_STATE_UNDONE);
+					comp.setCompTime(new Timestamp(new Date().getTime()));
+					complainService.save(comp);
+					
+					//输出投诉结果
+					HttpServletResponse response = ServletActionContext.getResponse();
+					response.setContentType("text/html");
+					ServletOutputStream outputStream = response.getOutputStream();
+					outputStream.write("success".getBytes("utf-8"));
+					outputStream.close();
+
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
 	public Map<String, Object> getReturn_map() {
 		return return_map;
 	}
 
 	public void setReturn_map(Map<String, Object> return_map) {
 		this.return_map = return_map;
+	}
+
+	public Complain getComp() {
+		return comp;
+	}
+
+	public void setComp(Complain comp) {
+		this.comp = comp;
 	}
 	
 }
