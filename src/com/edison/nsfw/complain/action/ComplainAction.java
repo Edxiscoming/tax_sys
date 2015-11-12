@@ -54,6 +54,10 @@ public class ComplainAction extends BaseAction {
 					queryHelper.addCondition("c.compTitle like ?", "%" + complain.getCompTitle() + "%");
 				}
 			}
+			//安装状态升序排序
+			queryHelper.addOrderByProperty("c.state", QueryHelper.ORDER_BY_ASC);
+			//按照投诉时间升序排序
+			queryHelper.addOrderByProperty("c.compTime", QueryHelper.ORDER_BY_ASC);
 			
 			pageResult=complainService.getPageResult(queryHelper, getPageNo(), getPageSize());
 		} catch (Exception e) {
