@@ -44,4 +44,6 @@
 	<include file="com/edison/login/conf/login-struts.xml"></include>
 	<!-- 信息 -->
 	<include file="com/edison/nsfw/info/conf/info-struts.xml"></include>
+		<!-- 投诉系统 -->
+	<include file="com/edison/nsfw/complain/conf/complain-struts.xml"></include>
 </struts>

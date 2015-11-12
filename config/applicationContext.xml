@@ -35,7 +35,7 @@
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop>   根据映射文件修改数据库-->
 				<prop key="javax.persistence.validation.mode">none</prop>
 			</props>
 		</property>
@@ -45,12 +45,7 @@
 				<value>classpath:com/edison/test/entity/*.hbm.xml</value>
 			</list>
 		</property>
-		<property name="mappingResources">
-			<list>
-				<value>com/edison/nsfw/complain/entity/ComplainReply.hbm.xml</value>
-				<value>com/edison/nsfw/complain/entity/Complain.hbm.xml</value>
-			</list>
-		</property></bean>
+		</bean>
 	<!-- 引入sessionfactory，便于别的文件继承 -->
 	<bean id="baseDao" abstract="true">
 		<property name="sessionFactory" ref="sessionFactory"></property>
