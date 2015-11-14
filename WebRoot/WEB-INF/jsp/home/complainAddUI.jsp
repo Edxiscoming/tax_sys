@@ -100,7 +100,7 @@
         </tr>
         <tr>
             <td class="tdBg">是否匿名投诉：</td>
-            <td><s:radio name="comp.isNm" list="#{'0':'非匿名投诉','1':'匿名投诉' }" value="0"/></td>
+            <td><s:radio name="comp.isNm" list="#{'0':'非匿名投诉','1':'匿名投诉' }" value="1"/></td>
         </tr>
        
     </table>
