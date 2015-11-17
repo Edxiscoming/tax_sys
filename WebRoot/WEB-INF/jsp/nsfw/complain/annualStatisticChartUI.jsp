@@ -10,6 +10,9 @@
   <head>
     <%@include file="/common/header.jsp"%>
     <title>年度投诉统计图</title>
+    <script type="text/javascript" src="${basePath }js/fusioncharts/fusioncharts.js"></script>
+  	<script type="text/javascript" src="${basePath }js/fusioncharts/fusioncharts.charts.js"></script>
+ 	 <script type="text/javascript" src="${basePath }js/fusioncharts/themes/fusioncharts.theme.fint.js"></script>
   </head>
   
   <body>

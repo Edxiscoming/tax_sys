@@ -98,6 +98,10 @@ public class ComplainAction extends BaseAction {
 			}
 			return "list";
 		}
+	//跳转到统计页面
+	public String annualStatisticChartUI(){
+		return "annualStatisticChartUI";
+	}
 	public ComplainService getComplainService() {
 		return complainService;
 	}
