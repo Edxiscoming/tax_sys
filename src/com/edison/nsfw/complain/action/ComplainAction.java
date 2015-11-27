@@ -3,12 +3,17 @@ package com.edison.nsfw.complain.action;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.struts2.ServletActionContext;
 
 import sun.security.krb5.internal.rcache.ReplayCache;
 
@@ -27,6 +32,7 @@ public class ComplainAction extends BaseAction {
 	private String startTime;
 	private String endTime;
 	private ComplainReply reply;
+	private Map<String, Object> statisticMap;
 	
 	public String listUI(){
 		
@@ -102,6 +108,25 @@ public class ComplainAction extends BaseAction {
 	public String annualStatisticChartUI(){
 		return "annualStatisticChartUI";
 	}
+	
+	//根据年度获取该年度下的统计数
+	public String getAnnualStatisticData(){
+		//1、获取年份
+		HttpServletRequest request = ServletActionContext.getRequest();
+		int year = 0;
+		if(request.getParameter("year") != null){
+			year = Integer.valueOf(request.getParameter("year"));
+		} else {
+			//默认 当前年份
+			year = Calendar.getInstance().get(Calendar.YEAR);
+		}
+		//2、获取统计年度的每个月的投诉数
+		statisticMap = new HashMap<String, Object>();
+		statisticMap.put("msg", "success");
+		//通过月份查出所有的额投诉
+		statisticMap.put("chartData", complainService.getAnnualStatisticDataByYear(year));
+		return "annualStatisticData";
+	}
 	public ComplainService getComplainService() {
 		return complainService;
 	}
@@ -131,6 +156,12 @@ public class ComplainAction extends BaseAction {
 	}
 	public void setReply(ComplainReply reply) {
 		this.reply = reply;
+	}
+	public Map<String, Object> getStatisticMap() {
+		return statisticMap;
+	}
+	public void setStatisticMap(Map<String, Object> statisticMap) {
+		this.statisticMap = statisticMap;
 	}
 	
 }
